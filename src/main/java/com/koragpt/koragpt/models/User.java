@@ -3,9 +3,6 @@ package com.koragpt.koragpt.models;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-
-import java.security.Timestamp;
-import java.time.Instant;
 import java.time.LocalDateTime;
 
 
@@ -36,7 +33,6 @@ public class User {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
-
 
     @PrePersist
     protected void onCreate() {
