@@ -2,6 +2,7 @@ package com.koragpt.koragpt.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
@@ -15,6 +16,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Getter
     @Column(unique = true,name = "username")
     private String username;
 
@@ -42,6 +44,7 @@ public class User {
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
+
 }
 
 
