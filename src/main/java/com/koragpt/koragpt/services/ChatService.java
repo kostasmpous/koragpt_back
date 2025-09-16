@@ -20,8 +20,6 @@ public class ChatService {
     }
 
     public Chat createChat(CreateChatRequestDTO chat){
-
-
         Chat createdChat = new Chat();
         User user = userRepository.findUserById(chat.getUserId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
