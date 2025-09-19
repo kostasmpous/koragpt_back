@@ -13,4 +13,8 @@ public interface MessageRepository extends JpaRepository<Message,Long> {
     List<Message> findByChatOrderByCreatedAtAsc(Chat chat); // get messages in a chat, oldest first
 
     List<Message> findTop50ByChatOrderByCreatedAtDesc(Chat chat); // get recent messages
+
+    List<Message> findByChatIdOrderByCreatedAtAsc(Long chatId);
+
+    List<Message> getMessageByChat(Chat chat);
 }

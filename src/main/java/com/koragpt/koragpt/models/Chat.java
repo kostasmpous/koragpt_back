@@ -22,6 +22,9 @@ public class Chat {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "OpenAI_Id")
+    private String openAiId;
+
     @Column(name = "Created_at")
     private LocalDateTime createdAt;
 
