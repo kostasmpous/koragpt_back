@@ -13,28 +13,13 @@ public class CorsConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-
-        // Frontend origin(s)
-        config.setAllowedOrigins(List.of(
-                "http://localhost:3000"   // Next.js dev
-                // add more if needed, e.g. "http://127.0.0.1:3000"
-        ));
-
-        // Methods your API uses
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
-
-        // Headers the browser may send
-        config.setAllowedHeaders(List.of("*"));
-
-        // If you use cookies/session or Authorization header in the browser:
-        config.setAllowCredentials(true);
-
-        // Optional: expose custom headers to JS (if you set any)
-        config.setExposedHeaders(List.of("Location"));
-
+        CorsConfiguration cfg = new CorsConfiguration();
+        cfg.setAllowedOrigins(List.of("http://localhost:3000"));
+        cfg.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
+        cfg.setAllowedHeaders(List.of("Authorization","Content-Type","Accept"));
+        cfg.setAllowCredentials(true);
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
+        source.registerCorsConfiguration("/**", cfg);
         return source;
     }
 }

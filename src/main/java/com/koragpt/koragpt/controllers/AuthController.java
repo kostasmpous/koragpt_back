@@ -42,7 +42,12 @@ public class AuthController {
             // Use secure hash check
             if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
                 String token = JwtUtil.generateToken(user.getUsername());
-                return ResponseEntity.ok(new JwtResponseDTO(token));
+                JwtResponseDTO response = new JwtResponseDTO();
+                response.setToken(token);
+                response.setUsername(user.getUsername());
+                response.setRole(user.getRole());
+                response.setId(user.getId());
+                return ResponseEntity.ok(response);
             }
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
