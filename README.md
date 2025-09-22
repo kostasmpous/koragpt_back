@@ -168,3 +168,30 @@ The lifecycle of a message through KoraGPT looks like this:
 
 ### Example: User → LLM → Assistant
 ![mermaid11.svg](img/mermaid11.svg)
+
+---
+
+## Security & Cross-Origin Behavior
+
+- **JWT-based authentication**
+    - Spring Security is configured for **stateless JWT auth**.
+    - All routes under `/api/auth/**` are **public** (e.g., signup, login).
+    - Every other endpoint requires a valid `Authorization: Bearer <token>` header, processed by `AuthTokenFilter`.
+
+- **JWT details**
+    - Tokens are built and validated with **HS256** using the `JWTSECRET` environment variable.
+    - By default, tokens expire after **24 hours**.
+    - `JwtUtil` handles creation and validation logic.
+
+- **User details service**
+    - `CustomUserDetailsService` adapts persisted `User` entities to Spring Security’s `UserDetails` model.
+    - Every account is currently mapped to the `USER` authority (expandable later for admin roles).
+
+- **CORS configuration**
+    - Local development clients at:
+        - `http://localhost:3000`
+        - `http://127.0.0.1:3000`
+    - …are allowed to call the backend directly.
+    - Standard HTTP methods (`GET`, `POST`, `PATCH`, `DELETE`, `OPTIONS`) and headers are exposed.
+
+---
