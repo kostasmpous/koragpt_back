@@ -2,6 +2,7 @@ package com.koragpt.koragpt.services;
 
 import com.koragpt.koragpt.models.User;
 import com.koragpt.koragpt.models.dtos.auth.SignupRequestDTO;
+import com.koragpt.koragpt.models.dtos.user.UserDTO;
 import com.koragpt.koragpt.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,5 +38,12 @@ public class UserService {
         user.setActive(request.isActive());
         user = this.userRepository.save(user);
         return user;
+    }
+
+    public void updateUser(User u, UserDTO body) {
+        if (body.getEmail() != null)      u.setEmail(body.getEmail());
+        if (body.getFirstName() != null)  u.setFirst_name(body.getFirstName());
+        if (body.getLastName() != null)   u.setLast_name(body.getLastName());
+        userRepository.save(u);
     }
 }
