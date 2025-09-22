@@ -1,5 +1,7 @@
 # KoraGPT Backend
 
+> ⚡️ The frontend for this project is here: [koragpt_front](https://github.com/kostasmpous/koragpt_front)
+
 KoraGPT Backend is a Spring Boot service that secures user accounts, manages chat sessions, and brokers conversations with different large language model (LLM) providers for the KoraGPT product line.
 
 ## Core features
