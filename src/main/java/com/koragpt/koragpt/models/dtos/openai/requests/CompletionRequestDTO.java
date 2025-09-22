@@ -12,5 +12,4 @@ import java.util.List;
 public class CompletionRequestDTO {
     private String model;
     private List<MessageDTO> messages;
-    private Integer max_tokens;
 }

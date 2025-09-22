@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface ModelsAIRepository extends JpaRepository<ModelsAI,Long> {
     List<ModelsAI> findAllByCompany(String company);
+
+    List<ModelsAI> findByModel(String model);
 }

@@ -27,6 +27,7 @@ public class ModelsAIController {
     @GetMapping("/{company}")
     public ResponseEntity<List<ModelsExtractDTO>> getAllModelsOfCompany(@PathVariable String company){
         List<ModelsAI> listModels = modelsAIRepository.findAllByCompany(company);
+
         return ResponseEntity.ok(modelsaiService.prepareModelsList(listModels));
     }
 }

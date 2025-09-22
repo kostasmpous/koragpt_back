@@ -7,6 +7,7 @@ import com.koragpt.koragpt.models.dtos.CreateMessageRequestDTO;
 import com.koragpt.koragpt.repositories.ChatRepository;
 import com.koragpt.koragpt.repositories.MessageRepository;
 import com.koragpt.koragpt.repositories.UserRepository;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,9 +26,9 @@ public class MessageService {
         this.completionApiService = completionApiService;
     }
 
-    public  Message createMessage(CreateMessageRequestDTO msg, List<Message> m, String model) {
+    public  Message createMessage(CreateMessageRequestDTO msg, List<Message> m, String model, Authentication auth) {
+        User user = userRepository.findUserByUsername(auth.getName()).orElseThrow();
         Message message = new Message();
-        User user = userRepository.findUserById(msg.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
         Chat chat = chatRepository.findById(msg.getChatId()).orElseThrow(() -> new RuntimeException("Chat not found"));
         User assistantUser = userRepository.findUserByUsername("assistant").orElseThrow(() -> new RuntimeException("User not found"));
 

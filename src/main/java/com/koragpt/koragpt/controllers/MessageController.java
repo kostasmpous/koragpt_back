@@ -6,6 +6,7 @@ import com.koragpt.koragpt.repositories.ChatRepository;
 import com.koragpt.koragpt.repositories.MessageRepository;
 import com.koragpt.koragpt.services.MessageService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,8 +26,8 @@ public class MessageController {
     }
 
     @PostMapping
-    public ResponseEntity<Message> createMessage(@RequestBody CreateMessageRequestDTO msg) {
+    public ResponseEntity<Message> createMessage(@RequestBody CreateMessageRequestDTO msg, Authentication auth) {
         List<Message> m = msgRepository.findByChatIdOrderByCreatedAtAsc(msg.getChatId());
-        return ResponseEntity.ok(messageService.createMessage(msg,m,msg.getModel()));
+        return ResponseEntity.ok(messageService.createMessage(msg,m,msg.getModel(),auth));
     }
 }

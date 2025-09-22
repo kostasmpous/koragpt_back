@@ -3,6 +3,7 @@ package com.koragpt.koragpt.controllers;
 import com.koragpt.koragpt.models.User;
 import com.koragpt.koragpt.models.dtos.auth.JwtResponseDTO;
 import com.koragpt.koragpt.models.dtos.auth.LoginRequestDTO;
+import com.koragpt.koragpt.models.dtos.auth.SignupRequestDTO;
 import com.koragpt.koragpt.repositories.UserRepository;
 import com.koragpt.koragpt.security.JwtUtil;
 import com.koragpt.koragpt.services.UserService;
@@ -54,11 +55,10 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> signup(@RequestBody User user) {
+    public ResponseEntity<?> signup(@RequestBody SignupRequestDTO user) {
         Optional userOpt = userRepository.findUserByUsername(user.getUsername());
         System.out.println("User: " + user.getUsername() + " " + user.getPassword());
         if (userOpt.isEmpty()) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
             userService.createUser(user);
         }
         return ResponseEntity.ok("Signup completed");

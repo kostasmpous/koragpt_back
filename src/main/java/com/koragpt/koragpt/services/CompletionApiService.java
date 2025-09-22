@@ -1,9 +1,11 @@
 package com.koragpt.koragpt.services;
 
 import com.koragpt.koragpt.models.Message;
+import com.koragpt.koragpt.models.ModelsAI;
 import com.koragpt.koragpt.models.dtos.openai.requests.CompletionRequestDTO;
 import com.koragpt.koragpt.models.dtos.openai.requests.MessageDTO;
 import com.koragpt.koragpt.models.dtos.openai.responses.ConversationAIResponse;
+import com.koragpt.koragpt.repositories.ModelsAIRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -17,22 +19,34 @@ import java.util.List;
 
 @Service
 public class CompletionApiService {
-    private String apiKey;
-    private String url = "https://api.openai.com/v1/chat/completions";
+    private String OpenAIapiKey;
+    private String GeminiApiKey;
+    private String urlOpenAI = "https://api.openai.com/v1/chat/completions";
+    private String urlGemini = "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions";
+    private ModelsAIRepository modelsAIRepository;
 
-    public CompletionApiService(@Value("${llms.openai.key}") String apiKey) {
-        this.apiKey = apiKey;
+    public CompletionApiService(@Value("${llms.openai.key}") String OpenAIapiKey, @Value("${llms.gemini.key}") String GeminiApiKey, ModelsAIRepository modelsAIRepository) {
+        this.OpenAIapiKey = OpenAIapiKey;
+        this.GeminiApiKey = GeminiApiKey;
+        this.modelsAIRepository = modelsAIRepository;
     }
 
     public String createMessageToLLM(String model, List<Message> m) {
+        String company = modelsAIRepository.findByModel(model).get(0).getCompany();
         RestTemplate restTemplate = new RestTemplate();
+        String apiKey = GeminiApiKey;
+        String url = urlGemini;
+        if(company.equals("OpenAI")){
+            apiKey = OpenAIapiKey;
+            url = urlOpenAI;
+        }
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(apiKey);
 
         List<MessageDTO> messages = generateMessages(m);
-        CompletionRequestDTO requestBody = new CompletionRequestDTO(model,messages,120);
+        CompletionRequestDTO requestBody = new CompletionRequestDTO(model,messages);
 
 
         HttpEntity<CompletionRequestDTO> request = new HttpEntity<>(requestBody, headers);

@@ -2,30 +2,47 @@ package com.koragpt.koragpt.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "messages")
+@Table(name = "contact")
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
-public class Message {
+@Data
+public class Contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name="email")
+    private String email;
 
+    @Column(name="First_name")
+    private String firstName;
 
-    @Column(columnDefinition = "text", nullable = false)
-    private String message;
+    @Column(name = "Last_name")
+    private String lastName;
+
+    @Column(name = "Address")
+    private String address;
+
+    @Column
+    private String phone;
+
+    @Column(name = "Contact_Type")
+    private String type;
+
+    @Column
+    private String postalcode;
+
+    @Column
+    private String country;
+
+    @Column
+    private String city;
 
     @Column(name = "Created_at")
     private LocalDateTime createdAt;
@@ -33,9 +50,11 @@ public class Message {
     @Column(name = "Updated_at")
     private LocalDateTime updatedAt;
 
-    @JoinColumn(name = "chat_id")
-    @ManyToOne
-    private Chat chat;
+    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
+
 
     @PrePersist
     protected void onCreate() {
@@ -47,7 +66,4 @@ public class Message {
     protected void onUpdate() {
         this.updatedAt = LocalDateTime.now();
     }
-
 }
-
-
