@@ -55,6 +55,9 @@ Tip: drop these into a local `.env` and export them before running `./mvnw sprin
 - Seed an `assistant` user (any password and role string will do) so the service can attach LLM replies to that account.
 - With `spring.jpa.hibernate.ddl-auto=update`, the schema will be auto-created/updated on startup; adjust if you want stricter migration control.
 
+Example of models_ai and Users needed:
+![Models DB Example.png](img/Models%20DB%20Example.png)
+![user example.png](img/user%20example.png)
 ### Run locally
 
 1. Start your Postgres instance and ensure the configured database exists.
