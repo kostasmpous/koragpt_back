@@ -167,4 +167,4 @@ The lifecycle of a message through KoraGPT looks like this:
     - The client app immediately displays it in the chat UI.
 
 ### Example: User → LLM → Assistant
-![mermaid_chart.svg](mermaid_chart.svg)
+![mermaid11.svg](img/mermaid11.svg)
